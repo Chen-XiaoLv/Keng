@@ -1,6 +1,9 @@
 from PIL import Image
 import numpy as np
+import os
 from ImageMix import multiply
+
+IMAGESIZE=640
 
 def is_black_image(image):
     histogram = image.convert("L").histogram()
@@ -34,4 +37,6 @@ def imageMultiply(base,mul,beta=4):
     return Image.fromarray(out)
 
 
-
+def load_fractal_images(fractal_img_dir):
+    fractal_img_paths = [os.path.join(fractal_img_dir, fname) for fname in os.listdir(fractal_img_dir) if fname.endswith(('.png', '.jpg', '.jpeg'))]
+    return [Image.open(path).convert('RGB').resize((IMAGESIZE, IMAGESIZE)) for path in fractal_img_paths]
